@@ -54,6 +54,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True   
+CSRF_TRUSTED_ORIGINS = [
+    'https://pruebas-nfcback.5n7tjo.easypanel.host'
+]
 
 ROOT_URLCONF = 'nfcCharro.urls'
 
