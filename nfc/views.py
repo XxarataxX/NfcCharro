@@ -1,10 +1,11 @@
 from rest_framework import viewsets
-from .models import nfc
-from .serializers import nfcSerializer
+from .models import Purchase, PurchaseItem, PurchaseLog, nfc
+from .serializers import PurchaseItemSerializer, PurchaseLogSerializer, PurchaseSerializer, nfcSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
+from rest_framework import generics
 
 class nfcViewSet(viewsets.ModelViewSet):
     queryset = nfc.objects.all()
@@ -43,3 +44,37 @@ class ActualizarDineroView(APIView):
             'dinero_actualizado_id1': nfc_obj1.dinero,
             'dinero_actualizado_id2': nfc_obj2.dinero
         }, status=status.HTTP_200_OK)
+
+class PurchaseItemListCreateAPIView(generics.ListCreateAPIView):
+    queryset = PurchaseItem.objects.all()
+    serializer_class = PurchaseItemSerializer
+
+
+class PurchaseItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PurchaseItem.objects.all()
+    serializer_class = PurchaseItemSerializer
+
+
+class PurchaseListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
+
+
+class PurchaseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
+    
+class PurchaseLogListCreateAPIView(generics.ListCreateAPIView):
+    """
+    API View for listing all purchase logs or creating a new one.
+    """
+    queryset = PurchaseLog.objects.all()
+    serializer_class = PurchaseLogSerializer
+
+
+class PurchaseLogRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API View for retrieving, updating, or deleting a specific purchase log.
+    """
+    queryset = PurchaseLog.objects.all()
+    serializer_class = PurchaseLogSerializer
